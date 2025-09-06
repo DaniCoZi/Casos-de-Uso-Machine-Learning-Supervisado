@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Detección de fraudes{% endblock %}
+
+{% block content %}
+  <h1>3.1 Caso 1 – Detección de fraudes en el sector financiero</h1>
+  <div class="case-title-divider"></div>
+
+  <section class="case-section">
+    <h3>Problema</h3>
+    <p>El fraude financiero es uno de los mayores retos que enfrentan los bancos, aseguradoras y empresas de pagos electrónicos. Transacciones sospechosas como transferencias no autorizadas, compras con tarjetas robadas o suplantación de identidad generan pérdidas millonarias y deterioran la confianza de los clientes. Detectar estos patrones en tiempo real es un desafío, ya que los defraudadores constantemente cambian sus estrategias para evadir los sistemas tradicionales de seguridad.</p>
+  </section>
+
+  <section class="case-section">
+    <h3>Algoritmos utilizados</h3>
+    <p>El aprendizaje supervisado ha sido fundamental para mejorar la detección de fraudes. Se entrenan modelos con grandes volúmenes de datos históricos de transacciones etiquetadas como fraudulentas o legítimas. Los algoritmos más usados incluyen:</p>
+    <ul>
+      <li><strong>Árboles de decisión y Random Forest:</strong> identifican reglas y patrones de comportamiento en los datos (por ejemplo, transacciones a horas inusuales o montos atípicos).</li>
+      <li><strong>Redes neuronales supervisadas:</strong> permiten detectar patrones complejos y no lineales.</li>
+      <li><strong>Regresión logística:</strong> se utiliza en escenarios donde la interpretación del modelo es importante, ya que estima la probabilidad de fraude.</li>
+    </ul>
+  </section>
+
+  <section class="case-section">
+    <h3>Beneficios obtenidos</h3>
+    <ul>
+      <li><strong>Prevención en tiempo real:</strong> bloqueos antes de completar la transacción.</li>
+      <li><strong>Reducción de pérdidas:</strong> menos devoluciones y reclamaciones.</li>
+      <li><strong>Mejor experiencia del cliente:</strong> menos falsos positivos.</li>
+    </ul>
+  </section>
+
+  <section class="case-section">
+    <h3>Ejemplos reales</h3>
+    <ul>
+      <li><strong>PayPal:</strong> utiliza sistemas de machine learning supervisado para analizar miles de transacciones por segundo, identificando automáticamente anomalías y reduciendo fraudes en su plataforma global.</li>
+      <li><strong>Visa y Mastercard:</strong> han implementado soluciones similares basadas en árboles de decisión y redes neuronales, logrando disminuir el fraude en compras electrónicas en más de un 30%.</li>
+    </ul>
+  </section>
+{% endblock %}
