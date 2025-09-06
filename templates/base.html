@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}ML Supervisado{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- Header fijo -->
+  <header>
+    <h1>Casos de uso de Machine Learning Supervisado</h1>
+    <nav>
+      <ul class="menu">
+        <li><a href="/" class="{% if request.path=='/' %}active{% endif %}">Inicio</a></li>
+        <li><a href="/caso/deteccion-fraudes" class="{% if '/deteccion-fraudes' in request.path %}active{% endif %}">Detección de fraudes</a></li>
+        <li><a href="/caso/diagnostico-medico" class="{% if '/diagnostico-medico' in request.path %}active{% endif %}">Diagnóstico médico</a></li>
+        <li><a href="/caso/spam" class="{% if '/spam' in request.path %}active{% endif %}">Detección de spam</a></li>
+        <li><a href="/caso/reconocimiento-facial" class="{% if '/reconocimiento-facial' in request.path %}active{% endif %}">Reconocimiento facial</a></li>
+
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contenido dinámico -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

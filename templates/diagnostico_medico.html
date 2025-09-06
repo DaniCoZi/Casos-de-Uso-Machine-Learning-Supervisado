@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Diagnóstico médico asistido{% endblock %}
+
+{% block content %}
+  <h1>3.2 Caso 2 - Diagnóstico médico asistido con imágenes</h1>
+  <div class="case-title-divider"></div>
+
+  <section class="case-section">
+    <h3>Problema</h3>
+    <p>
+      La medicina moderna genera enormes volúmenes de imágenes clínicas (radiografías, tomografías, resonancias magnéticas, 
+      mamografías, etc.), cuya interpretación depende de la experiencia de los especialistas. El proceso es costoso en tiempo 
+      y puede ser propenso a errores humanos, especialmente en enfermedades que requieren detección temprana como el cáncer 
+      de mama, la neumonía o los problemas cardíacos. 
+      Existe la necesidad de herramientas de apoyo que ayuden a los médicos a analizar imágenes con mayor rapidez y precisión.
+    </p>
+  </section>
+
+  <section class="case-section">
+    <h3>Algoritmos utilizados</h3>
+    <p>
+      El aprendizaje supervisado se ha convertido en un aliado fundamental en el área de diagnóstico médico. 
+      Los modelos se entrenan con bases de datos que contienen miles de imágenes previamente etiquetadas 
+      (por ejemplo, imágenes que confirman la presencia o ausencia de un tumor).  
+      Los algoritmos más comunes incluyen:
+    </p>
+    <ul>
+      <li><strong>Máquinas de soporte vectorial (SVM):</strong> útiles en la clasificación binaria, como determinar si una imagen muestra una condición específica o no.</li>
+      <li><strong>Redes neuronales convolucionales (CNNs):</strong> especialmente diseñadas para el procesamiento de imágenes, permiten detectar patrones visuales complejos como manchas, deformaciones o anomalías en tejidos.</li>
+      <li><strong>Ensamblajes de modelos supervisados:</strong> combinan varias técnicas para mejorar la precisión.</li>
+    </ul>
+  </section>
+
+  <section class="case-section">
+    <h3>Beneficios obtenidos</h3>
+    <ul>
+      <li><strong>Detección temprana de enfermedades:</strong> mejora las posibilidades de éxito en tratamientos al identificar anomalías en fases iniciales.</li>
+      <li><strong>Apoyo al personal médico:</strong> reduce la carga de trabajo de radiólogos y especialistas, funcionando como un “segundo par de ojos”.</li>
+      <li><strong>Mayor precisión diagnóstica:</strong> algunos modelos han alcanzado niveles de precisión comparables o incluso superiores a médicos humanos en tareas específicas.</li>
+      <li><strong>Accesibilidad:</strong> permite llevar diagnósticos de alta calidad a regiones con escasez de especialistas.</li>
+    </ul>
+  </section>
+
+  <section class="case-section">
+    <h3>Ejemplos reales</h3>
+    <ul>
+      <li><strong>IBM Watson Health:</strong> desarrolló soluciones de diagnóstico asistido que utilizan CNNs entrenadas con millones de imágenes médicas para apoyar a médicos en oncología.</li>
+      <li><strong>Google DeepMind Health:</strong> colabora con hospitales del Reino Unido para entrenar modelos supervisados que detectan enfermedades oculares en imágenes de retina con un nivel de precisión comparable al de los mejores especialistas.</li>
+      <li><strong>Stanford Medicine:</strong> presentó un sistema de deep learning capaz de detectar más de 14 enfermedades pulmonares a partir de radiografías de tórax, con resultados destacados frente a médicos radiólogos.</li>
+    </ul>
+  </section>
+{% endblock %}
