@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Detección y filtrado de spam{% endblock %}
+
+{% block content %}
+  <h1>3.3 Caso 3 - Sistemas inteligentes para la detección y filtrado de correo spam</h1>
+  <div class="case-title-divider"></div>
+
+  <section class="case-section">
+    <h3>Problema identificado</h3>
+    <p>
+      La detección y filtrado de mensajes de <em>spam</em> sigue siendo un reto constante. 
+      Los spammers emplean técnicas cada vez más sofisticadas para evadir los filtros tradicionales, como:
+    </p>
+    <ul>
+      <li>Introducción de ruido en los correos.</li>
+      <li>Modificación en las formas de envío.</li>
+      <li>Desarrollo de ataques dirigidos a vulnerar filtros antispam.</li>
+    </ul>
+    <p>
+      A pesar del incremento en la precisión de los filtros, los atacantes encuentran formas de asegurar 
+      el envío masivo de correos no deseados, generando una dificultad adicional para los sistemas de seguridad.
+    </p>
+  </section>
+
+  <section class="case-section">
+    <h3>Algoritmos utilizados</h3>
+    <ul>
+      <li>
+        <strong>Naïve Bayes:</strong> uno de los primeros y más efectivos algoritmos para la detección de spam. 
+        Representa el texto como un conjunto de palabras independientes y calcula la probabilidad de que un mensaje sea spam.
+      </li>
+      <li>
+        <strong>Regresión logística:</strong> estima la probabilidad de que los correos sean spam o legítimos, 
+        utilizando características numéricas como la frecuencia de palabras o la longitud del mensaje.
+      </li>
+      <li>
+        <strong>Redes neuronales y Deep Learning (CNN/RNN):</strong> permiten analizar no solo palabras aisladas, 
+        sino también el contexto y la semántica del correo, logrando mayor precisión en sistemas modernos.
+      </li>
+    </ul>
+  </section>
+
+  <section class="case-section">
+    <h3>Beneficios obtenidos</h3>
+    <ul>
+      <li><strong>Naïve Bayes:</strong> rapidez y eficiencia, ideal para grandes volúmenes de correos; excelente en clasificación binaria de textos.</li>
+      <li><strong>Regresión logística:</strong> modelo sencillo e interpretable; útil para estimar la probabilidad de spam con base en múltiples características.</li>
+      <li><strong>Redes neuronales:</strong> capaces de aprender patrones complejos y no lineales; analizan contexto y significado de las palabras más allá de su frecuencia.</li>
+    </ul>
+  </section>
+{% endblock %}

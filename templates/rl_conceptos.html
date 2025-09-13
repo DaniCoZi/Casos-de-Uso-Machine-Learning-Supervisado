@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}Regresión lineal · Conceptos básicos{% endblock %}
+
+{% block content %}
+  <div class="container py-3">
+    <h1 class="mb-3">Conceptos básicos · Regresión lineal</h1>
+    <div class="case-title-divider"></div>
+    <!-- Contexto del proyecto -->
+    <section class="mb-4">
+      <p>
+        En este proyecto modelamos el <strong>ingreso</strong> de un negocio como función de
+        la <strong>inversión en publicidad</strong> y el <strong>precio de venta</strong>,
+        utilizando <em>regresión lineal múltiple</em>. El objetivo es entender el efecto de cada
+        variable y predecir el ingreso para nuevos valores de publicidad y precio.
+      </p>
+    </section>
+    
+    <!-- Tu explicación integrada -->
+    <section class="case-section">
+      <h2 class="h5">Regresión lineal</h2>
+      <div class="case-title-divider"></div>
+      <p>
+        Se dice que existe regresión de los valores de una variable con respecto a los de la otra
+        cuando hay alguna <em>línea de regresión</em> que se ajusta, de forma más o menos clara,
+        a los valores observados. Se usa para la identificación de relaciones potencialmente causales
+        o, cuando la relación causal está clara, para <strong>predecir</strong> una variable a partir de otra.
+      </p>
+      <p>
+        En fenómenos biológicos la relación entre variables suele ser aleatoria, pues múltiples factores
+        (a menudo desconocidos) influyen en la relación. En escenarios deterministas, las mediciones
+        caen muy próximas a la línea de regresión; la cercanía de los puntos a dicha línea está
+        determinada por el error de medición.
+      </p>
+    </section>
+
+    <section class="case-section">
+      <h2 class="h5">Definición de regresión lineal</h2>
+      <div class="case-title-divider"></div>
+      <p>
+        La regresión lineal es una técnica de modelado estadístico que examina la relación entre una
+        <strong>variable dependiente</strong> y una o más <strong>variables independientes</strong>.
+        Su objetivo es encontrar la mejor recta (o hiperplano) que se ajusta a los datos, permitiendo
+        predecir la variable dependiente \(Y\) a partir de las independientes \(X\).
+      </p>
+
+      <p class="mb-2">En su forma simple:</p>
+      {% raw %}
+      <pre class="formula-pre mjx-process">
+      \[ Y = \beta_0 + \beta_1 X + \varepsilon \]
+      </pre>
+      <ul>
+        <li><strong>Y</strong>: variable dependiente.</li>
+        <li><strong>X</strong>: variable independiente.</li>
+        <li><strong>\(\beta_0\)</strong>: intercepto (valor de Y cuando X=0).</li>
+        <li><strong>\(\beta_1\)</strong>: pendiente (cambio en Y por unidad de cambio en X).</li>
+        <li><strong>\(\varepsilon\)</strong>: término de error (diferencia entre observado y predicho).</li>
+      </ul>
+
+      <p class="mb-2">En nuestro caso (múltiple):</p>
+      <pre class="formula-pre mjx-process">
+      \[ \hat{Ingreso} = \beta_0 + \beta_1 \cdot Publicidad + \beta_2 \cdot Precio + \varepsilon \]
+      </pre>
+      {% endraw %}
+    </section>
+
+    <section class="case-section">
+      <h2 class="h5">Supuestos del modelo clásico</h2>
+      <div class="case-title-divider"></div>
+      <h3 class="h6 mt-3">Linealidad</h3>
+      <p class="mb-2">
+        Supuesto fundamental: la relación entre la variable dependiente y las independientes es
+        aproximadamente lineal. Si no lo es, el modelo lineal puede ser inadecuado y producir
+        predicciones sesgadas o poco precisas.
+      </p>
+
+      <h3 class="h6 mt-3">Homoscedasticidad</h3>
+      <p class="mb-2">
+        La varianza de los errores es constante a lo largo del rango de predicción. Si la dispersión
+        de los residuos cambia con el nivel de X (heterocedasticidad), se afectan la eficiencia de los
+        estimadores y la validez de pruebas de significancia.
+      </p>
+
+      <h3 class="h6 mt-3">Normalidad del error</h3>
+      <p class="mb-2">
+        Los residuos siguen (aprox.) una distribución normal con media cero. Este supuesto es relevante
+        para la <em>inferencia</em> (p-valores, intervalos de confianza); para predecir medias,
+        puede relajarse con tamaños muestrales grandes (TCL).
+      </p>
+
+      <h3 class="h6 mt-3">Independencia de los errores</h3>
+      <p class="mb-2">
+        Los residuos no deben estar correlacionados entre sí. En series de tiempo, la
+        <em>autocorrelación</em> viola este supuesto y requiere correcciones (por ejemplo, incorporar
+        rezagos o usar modelos específicos para datos temporales).
+      </p>
+    </section>
+
+    <section class="case-section">
+      <h2 class="h5">Flujo del ejercicio</h2>
+      <div class="case-title-divider"></div>
+      <ol>
+        <li><strong>Carga de datos</strong>: dataset con <em>Publicidad</em>, <em>Precio</em> e <em>Ingreso</em>.</li>
+        <li><strong>Entrenamiento</strong>: ajuste por mínimos cuadrados (OLS).</li>
+        <li><strong>Predicción</strong>: ingresar nueva tupla (Publicidad, Precio) para obtener \(\hat{Ingreso}\).</li>
+        <li><strong>Visualización</strong>: proyección 2D (Ingreso vs Publicidad con Precio fijado en la mediana).</li>
+      </ol>
+    </section>
+
+    <section class="case-section">
+      <h2 class="h5">Referencias (APA 7)</h2>
+      <div class="case-title-divider"></div>      
+      <p class="mb-1"><em>Fuentes proporcionadas</em></p>
+      <ul>
+        <li>
+          Eal, R. L. (s/f). <em>Jorge Dagnino S.1</em>. Sachile.cl.
+          Recuperado el 12 de septiembre de 2025, de
+          <a href="https://www.sachile.cl/upfiles/revistas/54e63943b5d69_14_regresion-2-2014_edit.pdf" target="_blank" rel="noopener">https://www.sachile.cl/.../regresion-2-2014_edit.pdf</a>
+        </li>
+        <li>
+          Nabi, I. (s/f). <em>Supuestos del modelo clásico de regresión lineal y de los modelos lineales generalizados</em>.
+          Marxistphilosophyofscience.com. Recuperado el 12 de septiembre de 2025, de
+          <a href="https://marxistphilosophyofscience.com/wp-content/uploads/2021/09/supuestos-del-modelo-clasico-de-regresion-lineal-y-de-los-modelos-lineales-generalizados-isadore-nabi.pdf" target="_blank" rel="noopener">https://marxistphilosophyofscience.com/.../supuestos-...</a>
+        </li>
+      </ul>
+
+      <p class="mb-1"><em>Bibliografía recomendada</em></p>
+      <ul>
+        <li>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2021). <em>An introduction to statistical learning</em> (2nd ed.). Springer.</li>
+        <li>Montgomery, D. C., Peck, E. A., &amp; Vining, G. G. (2012). <em>Introduction to linear regression analysis</em> (5th ed.). Wiley.</li>
+      </ul>
+    </section>
+
+    <div class="alert alert-info" role="alert">
+      Continúa en <strong>Regresión lineal → Ejercicio práctico</strong> para probar el modelo con tus propios
+      valores de <em>Publicidad</em> y <em>Precio</em>.
+    </div>
+  </div>
+{% endblock %}
