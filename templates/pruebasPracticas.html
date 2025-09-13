@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}Pruebas Prácticas{% endblock %}
+
+{% block content %}
+  <div class="container py-3">
+    <h1 class="mb-3">Modelo de negocio en función de inversión en publicidad y precio de venta.</h1>
+
+    <!-- ===== Índice rápido ===== -->
+    <div class="case-section" style="margin-top:18px;">
+      <h2 class="h5" style="margin:0;">Contenido</h2>
+      <div class="case-title-divider"></div>
+      <ul>
+        <li><a href="#intro">Introducción</a></li>
+        <li><a href="#definicion">Definición</a></li>
+        <li><a href="#supuestos">Supuestos habituales</a></li>
+        <li><a href="#conclusiones">Conclusiones del caso práctico</a></li>
+        <li><a href="#referencias">Referencias</a></li>
+      </ul>
+    </div>
+
+    <!-- ===== 2. Introducción ===== -->
+    <section id="intro" class="case-section">
+      <h2 class="h5" style="margin:0;">2. Introducción</h2>
+      <div class="case-title-divider"></div>
+      <p>
+        La regresión lineal es uno de los métodos más utilizados en estadística y en Machine Learning
+        debido a su simplicidad y capacidad para explicar relaciones entre variables. Su principal
+        objetivo es modelar cómo una o varias variables independientes influyen en una variable
+        dependiente continua, permitiendo así realizar predicciones y análisis de tendencias.
+      </p>
+      <p>
+        En términos prácticos, busca encontrar una recta (o hiperplano, en el caso de múltiples variables)
+        que mejor se ajuste a los datos observados, minimizando los errores de predicción. Esta técnica
+        es ampliamente aplicada en economía, ingeniería, ciencias sociales e inteligencia artificial,
+        pues ayuda a comprender fenómenos, estimar valores futuros y apoyar decisiones basadas en datos.
+      </p>
+    </section>
+
+    <!-- ===== 3. Definición ===== -->
+    <section id="definicion" class="case-section">
+      <h2 class="h5" style="margin:0;">3. Definición</h2>
+      <div class="case-title-divider"></div>
+      <p>
+        La regresión lineal es un método estadístico y de aprendizaje supervisado que busca modelar la
+        relación entre una <strong>variable dependiente</strong> (respuesta) y una o más
+        <strong>variables independientes</strong> (predictoras). La idea es ajustar una línea recta
+        (un hiperplano si hay varias variables) que minimice la diferencia entre valores observados y predichos.
+      </p>
+
+      <p class="mb-1">Ecuación general (simple):</p>
+      <pre class="formula-pre mjx-process">
+\[ Y = \beta_0 + \beta_1 X + \varepsilon \]
+      </pre>
+
+      <ul>
+        <li><strong>Y</strong>: variable dependiente.</li>
+        <li><strong>X</strong>: variable independiente.</li>
+        <li><strong>\(\beta_0\)</strong>: intercepto (valor de Y cuando X = 0).</li>
+        <li><strong>\(\beta_1\)</strong>: pendiente o coeficiente de regresión (cambio en Y por unidad de X).</li>
+        <li><strong>\(\varepsilon\)</strong>: error aleatorio (observado − predicho).</li>
+      </ul>
+
+      <p>
+        En Machine Learning, se usa para predicción continua: por ejemplo, precios de viviendas, demanda de productos,
+        temperaturas, etc.
+      </p>
+
+      <p class="mb-1"><em>Fuente:</em> /u/porrasborbon (2017), <a href="https://www.geogebra.org/m/pBVtPZDc" target="_blank" rel="noopener">GeoGebra</a>.</p>
+    </section>
+
+    <!-- ===== 4. Supuestos ===== -->
+    <section id="supuestos" class="case-section">
+      <h2 class="h5" style="margin:0;">4. Supuestos habituales de la regresión lineal</h2>
+      <div class="case-title-divider"></div>
+
+      <h3 class="h6">Linealidad</h3>
+      <ul>
+        <li>La relación entre las variables independientes y la dependiente es aproximadamente lineal.</li>
+        <li>Si la relación es no lineal, el modelo puede ser engañoso.</li>
+        <li><em>Ejemplo válido:</em> salario vs. años de experiencia (suele crecer con la experiencia).</li>
+        <li><em>Contraejemplo:</em> horas de estudio vs. rendimiento con saturación (relación no lineal).</li>
+      </ul>
+
+      <h3 class="h6">Independencia</h3>
+      <ul>
+        <li>Los errores \(\varepsilon\) deben ser independientes entre sí.</li>
+        <li>Si hay autocorrelación (típica en series temporales), el supuesto se viola.</li>
+        <li><em>Ejemplo válido:</em> pesos de personas distintas (errores no relacionados).</li>
+        <li><em>Contraejemplo:</em> temperatura diaria en días consecutivos (errores correlacionados).</li>
+      </ul>
+
+      <h3 class="h6">Homoscedasticidad</h3>
+      <ul>
+        <li>La varianza de los errores es (aprox.) constante para todos los niveles de X.</li>
+        <li>Si aumenta o disminuye sistemáticamente, hay heterocedasticidad.</li>
+        <li><em>Ejemplo válido:</em> altura vs. peso (varianza relativamente estable).</li>
+        <li><em>Contraejemplo:</em> ingreso vs. gasto (mayor variabilidad en ingresos altos).</li>
+      </ul>
+
+      <h3 class="h6">Normalidad del error</h3>
+      <ul>
+        <li>Los residuos siguen (aprox.) una distribución normal con media 0.</li>
+        <li>Es crucial para inferencia (intervalos, pruebas); menos crítico si solo se busca predicción.</li>
+        <li><em>Ejemplo válido:</em> consumo de agua con residuos simétricos alrededor de 0.</li>
+        <li><em>Contraejemplo:</em> ingresos personales con valores extremos (distribución sesgada).</li>
+      </ul>
+    </section>
+
+    <!-- ===== 5. Conclusiones del caso práctico ===== -->
+    <section id="conclusiones" class="case-section">
+      <h2 class="h5" style="margin:0;">5. Conclusiones del caso práctico</h2>
+      <div class="case-title-divider"></div>
+
+      <h3 class="h6">Utilidad del modelo</h3>
+      <ul>
+        <li>La regresión lineal multivariable mostró que <strong>publicidad</strong> y <strong>precio</strong> influyen en los ingresos.</li>
+        <li>Coeficiente positivo de publicidad ⇒ más inversión, mayores ingresos (atrae más clientes).</li>
+        <li>Coeficiente negativo de precio ⇒ subir mucho el precio puede reducir ingresos (cae la demanda).</li>
+      </ul>
+
+      <h3 class="h6">Límites del modelo</h3>
+      <ul>
+        <li>Aunque los supuestos se cumplieron de forma aceptable, el modelo simplifica la realidad.</li>
+        <li>Ingresos también dependen de competencia, calidad, ubicación, estacionalidad, etc.</li>
+        <li>No captura no linealidades ni interacciones complejas si no se modelan explícitamente.</li>
+      </ul>
+
+      <h3 class="h6">Posibles mejoras</h3>
+      <ul>
+        <li>Incluir variables relevantes (calidad percibida, promociones, tendencias de mercado).</li>
+        <li>Probar transformaciones (logs/polinomios) si hay no linealidad.</li>
+        <li>Validar con datos nuevos o periodos distintos para evaluar generalización.</li>
+      </ul>
+    </section>
+
+    <!-- ===== 6. Referencias ===== -->
+    <section id="referencias" class="case-section">
+      <h2 class="h5" style="margin:0;">6. Referencias</h2>
+      <div class="case-title-divider"></div>
+      <ul>
+        <li>
+          Linear regression calculator. (s/f). GraphPad.
+          Recuperado el 12 de septiembre de 2025, de
+          <a href="https://www.graphpad.com/quickcalcs/linear1/" target="_blank" rel="noopener">https://www.graphpad.com/quickcalcs/linear1/</a>
+        </li>
+        <li>
+          RPubs - Regresión lineal simple: Supuestos. (s/f).
+          Recuperado el 12 de septiembre de 2025, de
+          <a href="https://rpubs.com/acastro/regresion_lineal_supuestos" target="_blank" rel="noopener">https://rpubs.com/acastro/regresion_lineal_supuestos</a>
+        </li>
+        <li>
+          /u/porrasborbon. (2017, octubre 24). REGRESIÓN LINEAL. GeoGebra.
+          <a href="https://www.geogebra.org/m/pBVtPZDc" target="_blank" rel="noopener">https://www.geogebra.org/m/pBVtPZDc</a>
+        </li>
+        <li>
+          (s/f). Supuestos del modelo de regresión lineal. Universidad de Sevilla.
+          Recuperado el 12 de septiembre de 2025, de
+          <a href="https://personal.us.es/vararey/supuestos-modelo-regresion-lineal.pdf" target="_blank" rel="noopener">https://personal.us.es/vararey/supuestos-modelo-regresion-lineal.pdf</a>
+        </li>
+      </ul>
+    </section>
+  </div>
+{% endblock %}
