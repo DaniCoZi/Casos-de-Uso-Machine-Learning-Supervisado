@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}Regresión lineal · Ejercicio práctico{% endblock %}
+{% block content %}
+  <div class="container py-3">
+    <h1 class="mb-3">Ejercicio práctico</h1>
+
+    <div class="row g-4">
+      <div class="col-md-6">
+
+        <h2 class="h5 mb-2">Dataset de entrenamiento</h2>
+        <p class="text-muted" style="margin-bottom:.75rem">{{ data_desc }}</p>
+
+        {% if params and metrics %}
+          <div class="metrics d-flex flex-wrap gap-2" style="margin-bottom: .75rem;">
+            <span class="metric">β₀: <strong>{{ '%.4f'|format(params.intercept) }}</strong></span>
+            <span class="metric">β₁ (Publicidad): <strong>{{ '%.4f'|format(params.coef_publicidad) }}</strong></span>
+            <span class="metric">β₂ (Precio): <strong>{{ '%.4f'|format(params.coef_precio) }}</strong></span>
+            <span class="metric">R²: <strong>{{ '%.4f'|format(metrics.r2) }}</strong></span>
+            <span class="metric">MAE: <strong>{{ '%.3f'|format(metrics.mae) }}</strong></span>
+            <span class="metric">MSE: <strong>{{ '%.3f'|format(metrics.mse) }}</strong></span>
+          </div>
+        {% endif %}
+
+        <form method="post" class="mt-2" novalidate>
+          <div class="mb-2">
+            <label for="Publicidad" class="form-label">Publicidad</label>
+            <input id="Publicidad" name="Publicidad" type="number" step="0.01" min="0"
+                   value="{{ vals.Publicidad }}" class="form-control" required>
+          </div>
+          <div class="mb-2">
+            <label for="Precio" class="form-label">Precio de venta</label>
+            <input id="Precio" name="Precio" type="number" step="0.01" min="0"
+                   value="{{ vals.Precio }}" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary mt-1">Predecir ingreso</button>
+
+          {% if result is not none %}
+            <div class="mt-3" style="background:#0b1220;border:1px solid var(--border);border-radius:12px;padding:10px 12px;">
+              <div class="d-flex flex-wrap gap-2 align-items-center">
+                <span class="badge" style="background:#22d3ee;color:#06252d;font-weight:700;">Resultado</span>
+                <span>Ingreso estimado:</span>
+                <strong style="font-size:1.15rem">{{ '%.2f'|format(result) }}</strong>
+              </div>
+              <small class="text-muted d-block mt-1">
+                La línea del gráfico usa <em>Precio = {{ vals.Precio }}</em> y el punto marca tu predicción.
+              </small>
+            </div>
+          {% endif %}
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        {% if plot_uri %}
+          <figure class="card" style="background:#0b1220;border:1px solid var(--border);border-radius:12px;padding:12px;">
+            <img class="img-fluid rounded" alt="Ingreso vs Publicidad (Precio fijo)"
+                 src="data:image/png;base64,{{ plot_uri }}">
+            <figcaption class="text-muted small mt-2">
+              Proyección 2D con el Precio indicado (o la mediana si no ingresas valor).
+            </figcaption>
+          </figure>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  
+
+
+  {# --- EXPLICACIÓN DE PARÁMETROS Y MÉTRICAS --- #}
+  {% set rmse = (metrics.mse ** 0.5) %}
+  {% if vals and vals.Publicidad != '' and vals.Precio != '' %}
+    {% set pub = vals.Publicidad|float %}
+    {% set precio = vals.Precio|float %}
+  {% else %}
+    {% set pub = 50.0 %}
+    {% set precio = 30.0 %}
+  {% endif %}
+  {% set yhat_demo = params.intercept + params.coef_publicidad*pub + params.coef_precio*precio %}
+
+  <div class="explain-box">
+    <h3 class="h6">¿Qué significan estos valores?</h3>
+
+    <ul class="explain-list">
+      <li><strong>β₀ (intercepto):</strong> nivel base del ingreso cuando Publicidad=0 y Precio=0.</li>
+      <li><strong>β₁ (Publicidad):</strong> manteniendo fijo el precio, cada unidad extra de publicidad suma en promedio
+        <strong>{{ '%.4f'|format(params.coef_publicidad) }}</strong> unidades al ingreso.</li>
+      <li><strong>β₂ (Precio):</strong> manteniendo fija la publicidad, cada unidad extra de precio cambia en promedio
+        el ingreso en <strong>{{ '%.4f'|format(params.coef_precio) }}</strong> (negativo → tiende a bajar el ingreso).</li>
+    </ul>
+
+    <div class="metrics-row">
+      <span class="metric">R²: <strong>{{ '%.4f'|format(metrics.r2) }}</strong></span>
+      <span class="metric">MAE: <strong>{{ '%.3f'|format(metrics.mae) }}</strong></span>
+      <span class="metric">MSE: <strong>{{ '%.3f'|format(metrics.mse) }}</strong></span>
+      <span class="metric">RMSE: <strong>{{ '%.3f'|format(rmse) }}</strong></span>
+    </div>
+
+    <div class="example">
+      <span class="badge-pill">Ejemplo</span>
+      <p class="mb-0">
+        Con <strong>Publicidad = {{ '%.2f'|format(pub) }}</strong> y
+        <strong>Precio = {{ '%.2f'|format(precio) }}</strong>:
+      </p>
+
+      <!-- Fórmula con MathJax dentro de <pre> -->
+      <pre class="formula-pre mjx-process">
+  \[ \hat{Ingreso} = {{ '%.4f'|format(params.intercept) }}
+  + {{ '%.4f'|format(params.coef_publicidad) }} \times {{ '%.2f'|format(pub) }}
+  + {{ '%.4f'|format(params.coef_precio) }} \times {{ '%.2f'|format(precio) }}
+  = \; {{ '%.2f'|format(yhat_demo) }} \]
+      </pre>
+
+      <small class="muted">RMSE está en las mismas unidades que el ingreso; funciona como “error típico” del modelo.</small>
+    </div>
+  </div>
+
+
+
+{% endblock %}

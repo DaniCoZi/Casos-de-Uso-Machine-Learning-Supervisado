@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Reconocimiento Facial{% endblock %}
+
+{% block content %}
+  <h1>3.4 Caso 4 - Reconocimiento Facial Supervisado</h1>
+  <div class="case-title-divider"></div>
+
+  <section class="case-section">
+    <h3>Problema identificado</h3>
+    <p>
+      Hoy en día los sistemas de verificación de identidad en diferentes contextos (seguridad de accesos,
+      dispositivos móviles, control de asistencia, entidades bancarias, aeropuertos, etc.) usan procedimientos clásicos:
+      contraseñas, tarjetas o huellas dactilares.  
+    </p>
+    <p>
+      Estos métodos presentan problemas como:
+    </p>
+    <ul>
+      <li>Contraseñas o PIN pueden ser olvidados, usurpados o compartidos por terceros.</li>
+      <li>Las tarjetas de acceso pueden perderse o falsificarse.</li>
+      <li>Los sistemas de huellas requieren contacto físico, lo que puede resultar incómodo o poco higiénico.</li>
+    </ul>
+    <p>
+      Todo esto genera vulnerabilidades de seguridad, pérdidas de tiempo en las autenticaciones y riesgos de suplantación
+      de identidad.  
+      Por lo tanto, es necesario contar con un sistema más fiable, rápido y no invasivo para autenticar a una persona de manera segura.
+    </p>
+  </section>
+
+  <section class="case-section">
+    <h3>Algoritmos utilizados</h3>
+    <ul>
+      <li>
+        <strong>SVM (Support Vector Machine):</strong> se entrena con vectores de características extraídos de los rostros
+        (por ejemplo, <em>embeddings</em>). Muy usado en proyectos porque funciona bien con datasets pequeños y medianos.
+      </li>
+      <li>
+        <strong>k-NN (k-Nearest Neighbors):</strong> clasifica un rostro comparándolo con sus vecinos más cercanos en el
+        espacio de características. Librerías como <code>face_recognition</code> en Python suelen usar k-NN detrás de escena.
+      </li>
+      <li>
+        <strong>Redes Neuronales Convolucionales (CNNs):</strong> base de los sistemas modernos de reconocimiento facial.  
+        Pueden entrenarse desde cero o mediante <em>Transfer Learning</em> con modelos preentrenados, extrayendo automáticamente
+        las características más relevantes de los rostros.
+      </li>
+    </ul>
+  </section>
+
+  <section class="case-section">
+    <h3>Beneficios obtenidos</h3>
+    <p>
+      El reconocimiento facial aporta <strong>seguridad</strong>, <strong>rapidez</strong> y <strong>comodidad</strong>,
+      siendo una herramienta clave en la modernización de los sistemas de identificación y control de acceso.
+    </p>
+  </section>
+{% endblock %}
