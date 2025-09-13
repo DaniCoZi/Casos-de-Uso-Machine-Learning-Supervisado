@@ -3,27 +3,89 @@
 <head>
   <meta charset="utf-8">
   <title>{% block title %}ML Supervisado{% endblock %}</title>
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  >
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
-  <!-- Header fijo -->
-  <header>
+  <!-- Header como antes (estático, oscuro) -->
+  <header class="app-header">
     <h1>Casos de uso de Machine Learning Supervisado</h1>
     <nav>
       <ul class="menu">
-        <li><a href="/" class="{% if request.path=='/' %}active{% endif %}">Inicio</a></li>
-        <li><a href="/caso/deteccion-fraudes" class="{% if '/deteccion-fraudes' in request.path %}active{% endif %}">Detección de fraudes</a></li>
-        <li><a href="/caso/diagnostico-medico" class="{% if '/diagnostico-medico' in request.path %}active{% endif %}">Diagnóstico médico</a></li>
-        <li><a href="/caso/spam" class="{% if '/spam' in request.path %}active{% endif %}">Detección de spam</a></li>
-        <li><a href="/caso/reconocimiento-facial" class="{% if '/reconocimiento-facial' in request.path %}active{% endif %}">Reconocimiento facial</a></li>
+        <li><a href="{{ url_for('index') }}" class="{% if request.path == url_for('index') %}active{% endif %}">Inicio</a></li>
 
+        <li class="dropdown">
+          <button class="dropbtn {% if '/caso/' in request.path %}active{% endif %}">Casos de ML ▾</button>
+          <ul class="dropdown-menu">
+            <li><a href="{{ url_for('caso_fraudes') }}">Detección de fraudes</a></li>
+            <li><a href="{{ url_for('caso_diagnostico') }}">Diagnóstico médico</a></li>
+            <li><a href="{{ url_for('spam') }}">Sistema de Filtrado Spam</a></li>
+            <li><a href="{{ url_for('reconocimiento_facial') }}">Reconocimiento facial</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <button class="dropbtn {% if request.path.startswith(url_for('RL')) or request.path.startswith(url_for('pruebas')) or request.path.startswith(url_for('rl_conceptos')) %}active{% endif %}">
+            Regresión lineal ▾
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="{{ url_for('rl_conceptos') }}">Conceptos básicos</a></li>
+            <li><a href="{{ url_for('RL') }}">Ejercicio práctico</a></li>
+            <li><a href="{{ url_for('pruebas') }}">Pruebas</a></li>
+          </ul>
+        </li>
       </ul>
     </nav>
   </header>
 
-  <!-- Contenido dinámico -->
+
   <main>
     {% block content %}{% endblock %}
   </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <script>
+    document.querySelectorAll('.dropdown .dropbtn').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        const menu = this.parentElement.querySelector('.dropdown-menu');
+        const open = document.querySelector('.dropdown-menu.open');
+        if (open && open !== menu) open.classList.remove('open');
+        menu.classList.toggle('open');
+      });
+    });
+    document.addEventListener('click', function(e){
+      const isDropdown = e.target.closest('.dropdown');
+      if (!isDropdown) document.querySelectorAll('.dropdown-menu.open').forEach(m => m.classList.remove('open'));
+    });
+  </script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      // 👇 Procesar solo los elementos que yo marque con esta clase
+      options: {
+        processHtmlClass: 'mjx-process',
+        ignoreHtmlClass: 'no-mjx'    // por si quieres marcar zonas a ignorar
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 </body>
 </html>
