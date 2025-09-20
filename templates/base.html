@@ -24,7 +24,9 @@
         <li><a href="{{ url_for('index') }}" class="{% if request.path == url_for('index') %}active{% endif %}">Inicio</a></li>
 
         <li class="dropdown">
-          <button class="dropbtn {% if '/caso/' in request.path %}active{% endif %}">Casos de ML ▾</button>
+          <button class="dropbtn {% if '/caso/' in request.path %}active{% endif %}">
+            Casos de ML ▾
+          </button>
           <ul class="dropdown-menu">
             <li><a href="{{ url_for('caso_fraudes') }}">Detección de fraudes</a></li>
             <li><a href="{{ url_for('caso_diagnostico') }}">Diagnóstico médico</a></li>
@@ -43,6 +45,17 @@
             <li><a href="{{ url_for('pruebas') }}">Pruebas</a></li>
           </ul>
         </li>
+
+        <li class="dropdown">
+          <button class="dropbtn {% if request.path.startswith('/rlogistica') %}active{% endif %}">
+            Regresión logística ▾
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="{{ url_for('rLogistica_conceptos') }}">Conceptos</a></li>
+            <li><a href="{{ url_for('rLogistica') }}">Práctica</a></li>
+          </ul>
+        </li>
+
       </ul>
     </nav>
   </header>
