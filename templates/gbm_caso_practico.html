@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block title %}Caso práctico · Gradient Boosting Machines{% endblock %}
+
+{% block content %}
+<main class="rl-page">
+
+  <div class="card card-pane">
+    <div class="card-header">
+      <div>
+        <h1 class="card-title">Caso práctico · Gradient Boosting Machines (GBM)</h1>
+        <div class="small">Ubicación: Tipos de Algoritmos de Clasificación → Caso práctico</div>
+      </div>
+      <!-- POST real para evitar 405 -->
+      <form action="{{ url_for('gbm_evaluar') }}" method="post">
+        <button class="btn btn-primary" type="submit">Entrenar y evaluar GBM</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Contexto -->
+  <section class="case-section">
+    <h3>Contexto</h3>
+    <p>
+      El área de planeación urbana busca recomendar el <em>uso de suelo</em> más adecuado para terrenos candidatos:
+      <em>Residencial</em>, <em>Industrial</em> o <em>Agrícola</em>. Cada equipo implementará un clasificador con
+      <strong>Gradient Boosting Machines (GBM)</strong>, cuidando buenas prácticas de ML.
+    </p>
+
+    <div class="explain-box">
+      <h3>Variables</h3>
+      <ul class="explain-list">
+        <li><strong>Independientes (X):</strong> Tipo de suelo (categórica), altitud (num.), humedad (num.), proximidad a cuerpos de agua (num.), uso del suelo circundante (cat).</li>
+        <li><strong>Objetivo (y):</strong> <span class="badge-pill">Uso recomendado</span> con clases: <code>Residencial</code>, <code>Industrial</code>, <code>Agrícola</code>.</li>
+      </ul>
+      <p class="muted">Doc.: describir significado de cada clase y sus criterios (breve).</p>
+    </div>
+  </section>
+
+  <!-- Requisitos -->
+  <section class="case-section">
+    <h3>Requisitos del script del equipo</h3>
+    <ul>
+      <li>Carga de datos (documentar clases).</li>
+      <li>Split 80/20 con semilla fija.</li>
+      <li>Pipeline con preprocesamiento (One-Hot, imputación) y modelo GBM.</li>
+      <li>Evaluación: accuracy, reporte por clase, matriz de confusión 3×3.</li>
+      <li>Funciones: <code>evaluate()</code> y <code>predict_label(features, threshold=0.5)</code>.</li>
+    </ul>
+  </section>
+
+  <!-- Resultados -->
+  {% if metrics %}
+  <section class="case-section">
+    <h3>Resultados del modelo</h3>
+
+    <div class="metrics-row">
+      <span class="accuracy-badge">
+        Accuracy <span class="val">{{ (metrics.accuracy*100) | round(2) }}%</span>
+      </span>
+    </div>
+
+    <div class="nice-table" style="margin-top:.75rem">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Clase</th><th>Precision</th><th>Recall</th><th>F1</th><th>Soporte</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for cls, row in metrics.per_class.items() %}
+          <tr>
+            <td>{{ cls }}</td>
+            <td>{{ row.precision | round(3) }}</td>
+            <td>{{ row.recall | round(3) }}</td>
+            <td>{{ row.f1 | round(3) }}</td>
+            <td>{{ row.support }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if metrics.images.confusion %}
+      <div style="margin-top:1rem">
+        <h3>Matriz de confusión</h3>
+        <img src="{{ metrics.images.confusion }}" alt="Matriz de confusión GBM" style="max-width:100%; border-radius:12px; border:1px solid var(--border)">
+      </div>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <!-- Predicción -->
+  <section class="case-section">
+    <h3>Probar una predicción</h3>
+    <form method="post" action="{{ url_for('gbm_predecir') }}" class="predict-form">
+      <div class="metrics-row">
+
+        <!-- Tipo de suelo (select) -->
+        <label>
+          <span class="muted">Tipo de suelo</span><br>
+          <select name="tipo_suelo" class="form-control" required>
+            <option value="" disabled hidden {% if not request.form.get('tipo_suelo') %}selected{% endif %}>Seleccionar…</option>
+            <option value="arcilloso"       {% if request.form.get('tipo_suelo')=='arcilloso' %}selected{% endif %}>Arcilloso</option>
+            <option value="arenoso"         {% if request.form.get('tipo_suelo')=='arenoso' %}selected{% endif %}>Arenoso</option>
+            <option value="franco-arenoso"  {% if request.form.get('tipo_suelo')=='franco-arenoso' %}selected{% endif %}>Franco-arenoso</option>
+            <option value="limoso"          {% if request.form.get('tipo_suelo')=='limoso' %}selected{% endif %}>Limoso</option>
+          </select>
+        </label>
+
+        <label>
+          <span class="muted">Altitud (m)</span><br>
+          <input class="form-control" type="number" name="altitud" step="1"
+                 value="{{ request.form.get('altitud','') }}" required>
+        </label>
+
+        <label>
+          <span class="muted">Humedad (0–1)</span><br>
+          <input class="form-control" type="number" name="humedad" step="0.01" min="0" max="1"
+                 value="{{ request.form.get('humedad','') }}" required>
+        </label>
+
+        <label>
+          <span class="muted">Prox. a agua (m)</span><br>
+          <input class="form-control" type="number" name="prox_agua" step="1"
+                 value="{{ request.form.get('prox_agua','') }}" required>
+        </label>
+
+        <!-- Uso circundante (select) -->
+        <label>
+          <span class="muted">Uso circundante</span><br>
+          <select name="uso_circundante" class="form-control" required>
+            <option value="" disabled hidden {% if not request.form.get('uso_circundante') %}selected{% endif %}>Seleccionar…</option>
+            <option value="residencial" {% if request.form.get('uso_circundante')=='residencial' %}selected{% endif %}>Residencial</option>
+            <option value="industrial"  {% if request.form.get('uso_circundante')=='industrial' %}selected{% endif %}>Industrial</option>
+            <option value="agrícola"    {% if request.form.get('uso_circundante')=='agrícola' %}selected{% endif %}>Agrícola</option>
+            <option value="mixto"       {% if request.form.get('uso_circundante')=='mixto' %}selected{% endif %}>Mixto</option>
+          </select>
+        </label>
+
+      </div>
+
+      <div class="metrics-row">
+        <label>
+          <span class="muted">Umbral (threshold)</span><br>
+          <input class="form-control" type="number" name="threshold" step="0.01" min="0" max="1"
+                 value="{{ request.form.get('threshold','0.5') }}">
+        </label>
+      </div>
+
+      <button class="btn btn-primary btn-action" type="submit">Predecir</button>
+    </form>
+
+    {% if prediction %}
+      <hr class="section-sep">
+      <div class="explain-box">
+        <h3>Resultado de la predicción</h3>
+        <p><strong>Etiqueta:</strong> {{ prediction.label }}</p>
+        <p class="muted">Probabilidades por clase:</p>
+        <ul class="explain-list">
+          {% for cls, p in prediction.probas.items() %}
+          <li>{{ cls }}: {{ (p*100) | round(2) }}%</li>
+          {% endfor %}
+        </ul>
+        {% if prediction.low_confidence %}
+          <p class="muted"><em>⚠ Predicción de baja confianza (ninguna clase supera el umbral {{ prediction.threshold }})</em></p>
+        {% endif %}
+      </div>
+    {% endif %}
+  </section>
+
+</main>
+{% endblock %}
