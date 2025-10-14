@@ -56,6 +56,22 @@
           </ul>
         </li>
 
+      <li class="dropdown">
+        <button
+          class="dropbtn
+          {% if request.path.startswith('/TiposAlgoritClasi') or request.path.startswith('/PracticoRL') %}
+            active
+          {% endif %}">
+          Tipos de Algoritmos de Clasificación ▾
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="/TiposAlgoritClasi">Conceptos básicos</a></li>
+          <li><a href="{{ url_for('gbm_caso') }}">GBM · Caso práctico</a></li>
+        </ul>
+      </li>
+
+
+
       </ul>
     </nav>
   </header>
