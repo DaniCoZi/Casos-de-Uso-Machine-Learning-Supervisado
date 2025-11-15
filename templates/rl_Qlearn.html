@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Caso Práctico – Q-Learning{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1>Caso práctico: Entrenamiento Q-Learning en GridWorld</h1>
+  <hr>
+
+  <p>
+    En este ejercicio, se entrena un agente mediante <strong>Q-Learning</strong> para navegar un
+    entorno tipo GridWorld. El objetivo es llegar a la meta aprendiendo una
+    estrategia óptima basada en recompensas.
+  </p>
+
+  <h3>Entrenamiento del agente</h3>
+
+  <form method="post" class="mb-3">
+    <button type="submit" class="btn btn-primary">Iniciar Entrenamiento</button>
+  </form>
+
+  <small class="text-muted">
+    El entrenamiento se ejecuta en el servidor y genera automáticamente
+    la tabla Q, la gráfica de recompensa por episodio y la trayectoria aprendida.
+  </small>
+
+  {% if metrics %}
+    <hr>
+    <h4>Resultados del Entrenamiento</h4>
+    <ul>
+      <li><strong>Episodios:</strong> {{ metrics.episodes }}</li>
+      <li><strong>α (tasa de aprendizaje):</strong> {{ "%.3f"|format(metrics.alpha) }}</li>
+      <li><strong>γ (descuento temporal):</strong> {{ "%.3f"|format(metrics.gamma) }}</li>
+      <li><strong>ε inicial:</strong> {{ "%.3f"|format(metrics.epsilon_start) }}</li>
+      <li><strong>ε final:</strong> {{ "%.3f"|format(metrics.epsilon_final) }}</li>
+      <li><strong>Recompensa promedio (últimos 50 episodios):</strong> {{ "%.2f"|format(metrics.avg_reward_last_50) }}</li>
+      <li><strong>Recompensa demostración:</strong> {{ "%.2f"|format(metrics.demo_reward) }}</li>
+      <li><strong>Modelo guardado en:</strong> {{ metrics.model_path }}</li>
+    </ul>
+
+    <div class="row mt-4">
+      <div class="col-md-6 mb-3">
+        <h5>Evolución de la Recompensa</h5>
+        <img src="{{ url_for('static', filename=metrics.rewards_image) }}" 
+             alt="Recompensa por episodio"
+             class="img-fluid border rounded">
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <h5>Trayectoria Aprendida</h5>
+        <img src="{{ url_for('static', filename=metrics.trajectory_image) }}" 
+             alt="Trayectoria del agente"
+             class="img-fluid border rounded">
+      </div>
+    </div>
+
+  {% else %}
+    <div class="alert alert-info mt-4">
+      Aún no se ha entrenado el agente.
+      Presiona <strong>Iniciar Entrenamiento</strong> para generar resultados.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

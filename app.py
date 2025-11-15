@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 from flask import Flask, render_template, request, redirect, url_for, flash
 import regresionLineal
 import gbm_terrenos
+from rl_agent import train_q_learning
+
 
 # ─────────────── Flask ───────────────
 app = Flask(__name__)
@@ -320,6 +322,22 @@ def gbm_predecir():
     except Exception as e:
         flash(f"Error en la predicción GBM: {e}", "danger")
     return redirect(url_for("gbm_caso"))
+
+
+@app.route("/rl/Qlearn/conceptos")
+def rl_QlearnConceptos():
+    return render_template("rl_QlearnConceptos.html")
+
+# ----------------- Caso práctico RL -----------------
+
+@app.route("/rl/Qlearn", methods=["GET", "POST"])
+def rl_Qlearn():
+    metrics = None
+    if request.method == "POST":
+        metrics = train_q_learning(base_path=app.root_path)
+    return render_template("rl_Qlearn.html", metrics=metrics)
+
+
 
 # ─────────────── Main ───────────────
 if __name__ == "__main__":

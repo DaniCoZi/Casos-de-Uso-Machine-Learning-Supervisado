@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Aprendizaje por Refuerzo – Conceptos Q-Learning{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1>Aprendizaje por Refuerzo – Conceptos Básicos (Q-Learning)</h1>
+  <hr>
+
+  <h3>Definición general</h3>
+  <p>
+    El <strong>Aprendizaje por Refuerzo (Reinforcement Learning, RL)</strong> es un enfoque del
+    aprendizaje automático en el que un agente aprende a tomar decisiones
+    mediante la interacción con un entorno. Su objetivo es maximizar una
+    <strong>recompensa acumulada</strong>, aprendiendo por ensayo y error.
+  </p>
+
+  <h3>Diferencias con el Aprendizaje Supervisado y No Supervisado</h3>
+  <ul>
+    <li>
+      <strong>Supervisado:</strong> requiere ejemplos etiquetados, aprende una función entrada–salida.
+    </li>
+    <li>
+      <strong>No supervisado:</strong> busca descubrir patrones o agrupaciones sin etiquetas.
+    </li>
+    <li>
+      <strong>Reforzamiento:</strong> aprende una política óptima mediante recompensas y exploración.
+    </li>
+  </ul>
+
+  <h3>Componentes del modelo RL</h3>
+  <ul>
+    <li><strong>Agente:</strong> quien aprende y toma decisiones.</li>
+    <li><strong>Entorno:</strong> el sistema con el que interactúa.</li>
+    <li><strong>Estado (s):</strong> representación del entorno.</li>
+    <li><strong>Acciones (a):</strong> conjunto de movimientos posibles.</li>
+    <li><strong>Recompensa (r):</strong> retroalimentación numérica.</li>
+    <li><strong>Política (&pi;):</strong> estrategia para decidir acciones.</li>
+  </ul>
+
+  <h3>Principios del Ciclo de Aprendizaje</h3>
+  <ul>
+    <li><strong>Exploración vs. explotación:</strong> equilibrio entre probar acciones nuevas y usar las ya conocidas.</li>
+    <li><strong>Retorno acumulado:</strong> suma de recompensas obtenidas a lo largo del episodio.</li>
+    <li><strong>Descuento temporal (&gamma;):</strong> pondera la importancia de recompensas futuras.</li>
+  </ul>
+
+  <h3>Algoritmos principales</h3>
+  <ul>
+    <li>
+      <strong>Q-Learning:</strong> algoritmo off-policy que aprende una tabla Q(s,a) que estima
+      el valor esperado de tomar una acción en un estado.
+    </li>
+    <li>
+      <strong>SARSA:</strong> algoritmo on-policy que actualiza la Q según la acción realmente
+      ejecutada por la política actual.
+    </li>
+    <li>
+      <strong>DQN:</strong> extiende Q-Learning usando redes neuronales para aproximar la Q.
+    </li>
+  </ul>
+
+  <h3>Buenas prácticas</h3>
+  <ul>
+    <li>Control progresivo de la exploración (&epsilon;).</li>
+    <li>Ajuste adecuado del factor de descuento (&gamma;).</li>
+    <li>Función de recompensa bien diseñada.</li>
+    <li>Monitoreo continuo de la convergencia mediante gráficos.</li>
+    <li>Normalización o estabilización en entornos complejos.</li>
+  </ul>
+
+  <h3>Referencias (APA 7)</h3>
+  <ol>
+    <li>Sutton, R. S., & Barto, A. G. (2018). <em>Reinforcement Learning: An Introduction</em>. MIT Press.</li>
+    <li>Mnih, V. et al. (2015). Human-level control through deep reinforcement learning. <em>Nature</em>, 518, 529–533.</li>
+    <li>François-Lavet, V. et al. (2018). An Introduction to Deep Reinforcement Learning. <em>Foundations and Trends in Machine Learning</em>.</li>
+  </ol>
+</div>
+{% endblock %}
