@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from flask import Flask, render_template, request, redirect, url_for, flash
 import regresionLineal
 import gbm_terrenos
-from rl_agent import train_q_learning
+from rl_qlearn import train_q_learning, QLearningConfig
 
 
 # ─────────────── Flask ───────────────
