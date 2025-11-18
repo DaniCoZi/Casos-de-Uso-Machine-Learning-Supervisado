@@ -324,7 +324,7 @@ def gbm_predecir():
     return redirect(url_for("gbm_caso"))
 
 
-@app.route("/rl/Qlearn/conceptos")
+@app.route("/rl/QlearnConceptos")
 def rl_QlearnConceptos():
     return render_template("rl_QlearnConceptos.html")
 
