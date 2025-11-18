@@ -73,16 +73,18 @@
       <li class="dropdown">
         <button
           class="dropbtn
-          {% if request.path.startswith('/TiposAlgoritClasi') or request.path.startswith('/PracticoRL') %}
+          {% if request.path.startswith('/rl/Qlearn') %}
             active
           {% endif %}">
           Reinforcement Learning ▾
         </button>
+
         <ul class="dropdown-menu">
-          <li><a href="/rl/conceptos">RL · Conceptos</a></li>
-          <li><a href="/rl/qlearning">RL · Caso Práctico</a></li>
+          <li><a href="/rl/QlearnConceptos">RL · Conceptos</a></li>
+          <li><a href="/rl/Qlearn">RL · Caso Práctico</a></li>
         </ul>
       </li>
+
 
 
       </ul>
