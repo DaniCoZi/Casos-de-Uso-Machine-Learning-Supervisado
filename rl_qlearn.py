@@ -2,7 +2,24 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
+from dataclasses import dataclass
 
+# ----------------------------
+# CONFIGURACIÓN DEL AGENTE
+# ----------------------------
+@dataclass
+class QLearningConfig:
+    episodes: int = 300
+    alpha: float = 0.1
+    gamma: float = 0.99
+    epsilon_start: float = 1.0
+    epsilon_min: float = 0.05
+    epsilon_decay: float = 0.995
+
+
+# ----------------------------
+# ENTORNO GRIDWORLD
+# ----------------------------
 class GridWorld:
     def __init__(self, n_rows=5, n_cols=5, max_steps=50):
         self.n_rows = n_rows
@@ -79,15 +96,23 @@ class GridWorld:
         return traj, total_reward
 
 
+# ----------------------------
+# ENTRENAMIENTO Q-LEARNING
+# ----------------------------
 def train_q_learning(
-    episodes=300,
-    alpha=0.1,
-    gamma=0.99,
-    epsilon_start=1.0,
-    epsilon_min=0.05,
-    epsilon_decay=0.995,
+    config: QLearningConfig = None,
     base_path="."
 ):
+    if config is None:
+        config = QLearningConfig()
+
+    episodes = config.episodes
+    alpha = config.alpha
+    gamma = config.gamma
+    epsilon_start = config.epsilon_start
+    epsilon_min = config.epsilon_min
+    epsilon_decay = config.epsilon_decay
+
     env = GridWorld()
     q_table = np.zeros((env.n_states, env.n_actions))
     epsilon = epsilon_start
@@ -118,7 +143,6 @@ def train_q_learning(
 
     traject, demo_reward = env.greedy_trajectory(q_table)
 
-    # --- Guardar resultados ---
     static_dir = os.path.join(base_path, "static")
     models_dir = os.path.join(base_path, "models")
     os.makedirs(static_dir, exist_ok=True)
@@ -128,7 +152,6 @@ def train_q_learning(
     with open(model_path, "wb") as f:
         pickle.dump(q_table, f)
 
-    # Gráfica de recompensas
     rewards_img = "rl_rewards.png"
     rp = os.path.join(static_dir, rewards_img)
     plt.figure()
@@ -140,7 +163,6 @@ def train_q_learning(
     plt.savefig(rp)
     plt.close()
 
-    # Trayectoria
     traj_img = "rl_trayectoria.png"
     tp = os.path.join(static_dir, traj_img)
 
@@ -167,3 +189,4 @@ def train_q_learning(
         "trajectory_image": traj_img,
         "model_path": model_path,
     }
+# ----------------------------
